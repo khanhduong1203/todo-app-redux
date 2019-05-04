@@ -1,36 +1,50 @@
 import React, { Component } from 'react';
-
-export default class SearchBar extends Component{
+import {connect} from 'react-redux'
+import * as actions from '../actions/index'
+class SearchBar extends Component{
 
     constructor(props){
         super(props)
-        this.state=({
-            keyword:''
-        })
+        this.state = {
+            keyword: ''
+        }
     }
 
-    onChange =(event)=>{
-        var target = event.target
-        var name = target.name
-        var value = target.value
+    onChange =(event)=>{   
         this.setState({
-            [name]: value
+            keyword: event.target.value
         })
     }
 
     onSearch=()=>{
         this.props.onSearch(this.state.keyword)
-        this.setState({keyword:''})
+        //this.setState({keyword:''})
     }
 
 
    render(){
        var {keyword} = this.state
        return(
-           <div className='searchBar' >
+           <div className='searchBar' style={{display:'inline-block'}} >
                 <input value={keyword} type='text' onChange={this.onChange} name='keyword'/>
                 <button onClick={this.onSearch}>Tìm</button>
            </div>
        )
    } 
 }
+
+const mapStateToProps = state => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onSearch : (keyword) => {
+            dispatch(actions.searchTask(keyword))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SearchBar);

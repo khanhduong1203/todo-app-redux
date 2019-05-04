@@ -1,26 +1,43 @@
-import React,{Component} from 'react';
-
-export default class SortControl extends Component{
-
-    onClick =(_by,_value)=> {
-        this.props.onSort(_by,_value)
-    }
-
-    render(){
-        return(
-            <div className="dropdown">
-                <button className="dropbtn">Sắp xếp</button>
-                <div className="dropdown-content">
-                    <p onClick={()=> this.onClick('name',1)} 
-                       style={(this.props.sortby==='name' && this.props.sortvalue===1)?{color:'blue'}:{}}>A -> Z</p>
-                    <p onClick={()=> this.onClick('name',-1)}
-                       style={(this.props.sortby==='name' && this.props.sortvalue===-1)?{color:'blue'}:{}}>Z -> A</p>
-                    <p onClick={()=> this.onClick('status',1)}
-                       style={(this.props.sortby==='status' && this.props.sortvalue===1)?{color:'blue'}:{}}>Status : enable</p>
-                    <p onClick={()=> this.onClick('status',-1)}
-                       style={(this.props.sortby==='status' && this.props.sortvalue===-1)?{color:'blue'}:{}}>Status : disable</p>
-                </div>
-            </div>
-        )
-    }
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../actions/index";
+class SortControl extends Component {
+  onClick = (sortBy, sortValue) => {
+    let sort = {
+      by: sortBy,
+      value: sortValue
+    };
+    this.props.onSort(sort);
+  };
+  // className={(this.state.by==='status'&&this.state.value===-1)?'onColor':''}
+  render() {
+    return (
+      <div className="dropdown" style={{ display: "inline-block" }}>
+        <button className="dropbtn">Sắp xếp</button>
+        <div className="dropdown-content">
+          <p onClick={() => this.onClick("name", 1)}>A -> Z</p>
+          <p onClick={() => this.onClick("name", -1)}>Z -> A</p>
+          <p onClick={() => this.onClick("status", 1)}>Status : enable</p>
+          <p onClick={() => this.onClick("status", -1)}>Status : disable</p>
+        </div>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onSort: sort => {
+      dispatch(actions.sortTask(sort));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SortControl);

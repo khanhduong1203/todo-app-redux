@@ -5,9 +5,9 @@ import SortControl from './SortControl';
 export default class Control extends Component{
     render(){
         return(
-            <div className='taskControl'>
-                <SearchBar onSearch={this.props.onSearch}/>
-                <SortControl onSort={this.props.onSort} sortby={this.props.sortby} sortvalue={this.props.sortvalue}/>
+            <div className='taskControl' style={{width:'50%',display:'inline-block'}}>
+                <SortControl />
+                <SearchBar />
             </div>
         )
     }
